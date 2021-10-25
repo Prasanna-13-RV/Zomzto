@@ -1,0 +1,45 @@
+<%- layout('layout/layout') %>
+<h1 class="text-center text-decoration-underline m-3">Zomzto</h1>
+<div class="d-flex align-items-center justify-content-center">
+	<% products.forEach(product => { %>
+	<div class="card w-25 m-4 h-100">
+		<div class="positon-relative h-25">
+			<img
+				src="<%= product.image%>"
+				class="card-img-top h-100"
+				style="object-fit: cover"
+				alt="Image not available..."
+			/>
+		</div>
+		<div class="card-body">
+			<h5 class="card-title"><%= product.name %></h5>
+			<p class="card-text"><%= product.description %></p>
+		</div>
+		<div class="card-body p-0">
+			<form action="/cart" method="POST">
+				<input
+					type="text"
+					value="<%= product._id %>"
+					name="_id"
+					class="d-none"
+				/>
+				<button
+					class="
+						card-link
+						d-block
+						bg-primary
+						text-white text-decoration-none text-center
+						p-2
+						rounded
+						border-0
+						outline-0
+						w-100
+					"
+				>
+					Add to Cart
+				</button>
+			</form>
+		</div>
+	</div>
+	<% }) %>
+</div>

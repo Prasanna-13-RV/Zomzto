@@ -1,0 +1,55 @@
+<%- layout('layout/layout') %>
+
+<h1 class="text-center text-decoration-underline text-uppercase m-5">Deliveryman Dashboard</h1>
+<div class="container w-75">
+	<ul
+		class="
+			d-flex
+			list-unstyled
+			w-100
+			justify-content-around
+			border-bottom border-dark
+			pb-2
+		"
+	>
+		<li>Orders</li>
+		<li>Status</li>
+		<li>Update Status</li>
+	</ul>
+	<% assignedOrders.forEach((order,index) => { %>
+	<div class="border rounded">
+		<h6 class="text-center text-uppercase border-bottom my-3">
+			Order <%= index +1 %>
+		</h6>
+		<div class="row">
+			<% order.products.forEach(product => { %>
+			<div class="col-4">
+				<h5 class="text-center"><%= product.name %></h5>
+				<img
+					class="w-50 start-50 position-relative translate-middle-x"
+					src="<%= product.image %> "
+					alt="Image not found..."
+				/>
+			</div>
+			<div class="col-3 ps-5 ms-3 text-center me-auto d-flex align-self-center justify-content-center"><%= order.orderState %></div>
+			<form action="/delivery-dashboard" class="col-4 d-flex align-self-center justify-items-center" method="POST">
+				<select
+					class="form-select w-75 ms-4"
+					aria-label="Default select example"
+					name="deliveryStatus"
+					onchange="this.form.submit()"
+				>
+					<option <%- order.orderState=='Task Created' && "selected" %> value="Task Created#<%= order._id %>">Task Created</option>
+					<option <%- order.orderState=='Reached Store' && "selected" %> value="Reached Store#<%= order._id %>">Reached Store</option>
+					<option <%- order.orderState=='Items Picked' && "selected" %> value="Items Picked#<%= order._id %>">Items Picked</option>
+					<option <%- order.orderState=='Enroute' && "selected" %> value="Enroute#<%= order._id %>">Enroute</option>
+					<option <%- order.orderState=='Delivered' && "selected" %> value="Delivered#<%= order._id %>">Delivered</option>
+					<option <%- order.orderState=='Canceled' && "selected" %> value="Canceled#<%= order._id %>">Canceled</option>
+				</select>
+			</form>
+			<% }) %>
+		</div>
+	</div>
+	<% }) %>
+	<a href="/" class="btn btn-success w-100 my-4">GO TO HOME</a>
+</div>
